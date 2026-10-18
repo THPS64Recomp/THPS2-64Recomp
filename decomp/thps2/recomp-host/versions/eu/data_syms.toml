@@ -1,0 +1,21 @@
+# Game data addresses and struct offsets for code class eu (THPS2 Europe; names: versions/host_syms.toml).
+# Addresses: tools/translate_data.py eu (votes through sigmatch's matched pairs: gSControl 82, gSkater 48,
+# gTvType 12; the two strings by search, +0x20). Offsets: the same load/store counts per offset in both images.
+[addr]
+gTextExpansionFound    = 0x8001FF9C
+gTextExpansionNotFound = 0x8001FFB4
+gSControl              = 0x800EA9A4
+gSkater                = 0x800EA59C
+gTvType                = 0x800F5924   # GameEntry's init copies osTvType here (0x800B6A7C)
+gRunActive             = 0x800DC030   # same role as in us (+0xC0 like gSControl: translate_data.py, 1 vote; behaviour checked on the EU ROM, tests: pause_back)
+gTimeScale             = 0x800E886C   # gPhysicsFrameTime * 7680 each frame (the frame update; Slow-Nic: / 4 while the skater does a trick)
+gMusNumChannels        = 0x801020A0   # MUS library globals: channel count; USA + 0xC0 (MusHandleStop 0x800D403C)
+gMusChannels           = 0x801020A8   # MUS library globals: the channel records (304 bytes each)
+
+[field]
+View_Frustum      = 0x160
+Skater_ControlPtr = 0x1B04
+Skater_PhysState  = 0x1960
+Skater_RailBalance = 0x1D28   # rail lean; Cheat_IsOn(Perfect Balance) -> 0 in the rail physics
+Intro_Timer       = 0x250   # t2_intro screen: legal-text timer (float)
+Intro_State       = 0x260   # t2_intro screen: state word

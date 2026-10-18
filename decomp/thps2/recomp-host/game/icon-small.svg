@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Small-size version of icon.svg (used at 48 px and below): same tile and colours; the board keeps only its outline,
+       two-tone split and wheels; no trucks, stripes, rim or shadow; the number badge is about 2.3x larger and drawn on top. -->
+  <defs>
+    <clipPath id="deck-clip-thps2-small">
+      <rect x="176" y="28" width="160" height="456" rx="80" />
+    </clipPath>
+  </defs>
+
+  <!-- Tile -->
+  <rect x="32" y="32" width="448" height="448" rx="100" fill="#1C120C" stroke="#3B2314" stroke-width="8" />
+
+  <!-- Board -->
+  <g transform="rotate(-45 256 256)">
+    <!-- Wheels (drawn first so the deck sits on them) -->
+    <rect x="128" y="96" width="48" height="80" rx="18" fill="#F8FAFC" stroke="#09090B" stroke-width="12" />
+    <rect x="336" y="96" width="48" height="80" rx="18" fill="#F8FAFC" stroke="#09090B" stroke-width="12" />
+    <rect x="128" y="336" width="48" height="80" rx="18" fill="#F8FAFC" stroke="#09090B" stroke-width="12" />
+    <rect x="336" y="336" width="48" height="80" rx="18" fill="#F8FAFC" stroke="#09090B" stroke-width="12" />
+
+    <g clip-path="url(#deck-clip-thps2-small)">
+      <rect x="176" y="28" width="160" height="456" fill="#DC2626" />
+      <polygon points="176,28 336,28 336,220 176,276" fill="#180909" />
+    </g>
+    <rect x="176" y="28" width="160" height="456" rx="80" fill="none" stroke="#09090B" stroke-width="20" />
+  </g>
+
+  <!-- Number badge, large -->
+  <circle cx="256" cy="256" r="128" fill="#B91C1C" stroke="#F97316" stroke-width="22" />
+  <g transform="translate(256 256) scale(2.5) translate(-256 -256)">
+    <path d="M 230,222 L 274,222 L 282,230 L 282,250 L 274,258 L 246,258 L 246,275 L 282,275 L 282,290 L 230,290 L 230,252 L 238,244 L 266,244 L 266,236 L 230,236 Z"
+          fill="#FFFFFF" stroke="#09090B" stroke-width="4" stroke-linejoin="round" />
+  </g>
+</svg>

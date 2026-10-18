@@ -1,0 +1,2 @@
+xxh3.thps2_eu = 35efac33e932529a
+versions = thps2_eu

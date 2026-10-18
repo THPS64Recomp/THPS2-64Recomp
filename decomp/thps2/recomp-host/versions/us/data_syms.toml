@@ -1,0 +1,20 @@
+# Game data addresses and struct offsets for code class us (THPS2 USA; names: versions/host_syms.toml).
+# Facts only; where each was found: the private development notes (H3 controls, H4 skip intro, H6 widescreen).
+[addr]
+gTextExpansionFound    = 0x8001FF7C
+gTextExpansionNotFound = 0x8001FF94
+gSControl              = 0x800EA8E4
+gSkater                = 0x800EA4DC
+gTvType                = 0x800F5864   # GameEntry's init copies osTvType here (0x800B6A4C)
+gRunActive             = 0x800DBF70   # 1 while a level run is played, 0 paused / front end / screens over the level (RAM diffs; set by the pause handler at 0x8006C94C)
+gTimeScale             = 0x800E87AC   # gPhysicsFrameTime * 7680 each frame (the frame update; Slow-Nic: / 4 while the skater does a trick)
+gMusNumChannels        = 0x80101FE0   # MUS library globals: channel count; MusHandleStop 0x800D3F7C / __MusIntMain 0x800D4A20 read both
+gMusChannels           = 0x80101FE8   # MUS library globals: the channel records (304 bytes each)
+
+[field]
+View_Frustum      = 0x160   # l, r, b, t, near, far (floats)
+Skater_ControlPtr = 0x1B04
+Skater_PhysState  = 0x1960
+Skater_RailBalance = 0x1D28   # rail lean; Cheat_IsOn(Perfect Balance) -> 0 in the rail physics
+Intro_Timer       = 0x250   # t2_intro screen: legal-text timer (float)
+Intro_State       = 0x260   # t2_intro screen: state word

@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <clipPath id="deck-clip-thps2">
+      <rect x="184" y="36" width="144" height="440" rx="72" />
+    </clipPath>
+
+    <filter id="shadow-thps2" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="10" stdDeviation="6" flood-color="#000000" flood-opacity="0.65" />
+    </filter>
+  </defs>
+
+  <!-- App Icon Squircle Base (Dark Warehouse Brown/Rust) -->
+  <rect x="32" y="32" width="448" height="448" rx="100" fill="#1C120C" stroke="#3B2314" stroke-width="8" />
+
+  <!-- Skateboard Group -->
+  <g transform="rotate(-45 256 256)" filter="url(#shadow-thps2)">
+
+    <!-- 1. DECK GRAPHIC -->
+    <g clip-path="url(#deck-clip-thps2)">
+      <!-- Fiery Crimson-Orange Lower Base -->
+      <rect x="184" y="36" width="144" height="440" fill="#DC2626" />
+      
+      <!-- Deep Obsidian/Blood-Red Upper Diagonal Split -->
+      <polygon points="184,36 328,36 328,220 184,270" fill="#180909" />
+      
+      <!-- Bright Orange Stringer & Tail Band -->
+      <rect x="250" y="256" width="12" height="220" fill="#F97316" />
+      <rect x="184" y="348" width="144" height="12" fill="#180909" />
+
+      <!-- 2 Diagonal Stripe Tallies (Solar Yellow) -->
+      <polygon points="184,252 328,202 328,218 184,268" fill="#FACC15" />
+      <polygon points="184,276 328,226 328,242 184,292" fill="#FACC15" />
+
+      <!-- Center Badge (Gunmetal Ring + Fiery Orange-Red Core + Stark White "2") -->
+      <g transform="rotate(45 256 256)">
+        <circle cx="256" cy="256" r="54" fill="#94A3B8" stroke="#09090B" stroke-width="6" />
+        <circle cx="256" cy="256" r="44" fill="#B91C1C" stroke="#F97316" stroke-width="6" />
+        <!-- Bold White "2" with Heavy Black Drop Backing -->
+        <path d="M 230,222 L 274,222 L 282,230 L 282,250 L 274,258 L 246,258 L 246,275 L 282,275 L 282,290 L 230,290 L 230,252 L 238,244 L 266,244 L 266,236 L 230,236 Z" 
+              fill="#FFFFFF" stroke="#09090B" stroke-width="4" stroke-linejoin="round" />
+      </g>
+
+      <!-- Exposed Maple Wood Inner Rim -->
+      <rect x="192" y="44" width="128" height="424" rx="64" fill="none" stroke="#FDE68A" stroke-width="8" />
+    </g>
+
+    <!-- Deck Outer Border -->
+    <rect x="184" y="36" width="144" height="440" rx="72" fill="none" stroke="#09090B" stroke-width="12" />
+
+    <!-- 2. TOP TRUCK & WHEELS (Silver Hangers, Yellow Bushing, Crimson Core) -->
+    <g id="top-truck-thps2">
+      <rect x="142" y="138" width="228" height="12" rx="6" fill="#94A3B8" stroke="#09090B" stroke-width="6" />
+      <rect x="148" y="114" width="34" height="60" rx="12" fill="#F8FAFC" stroke="#09090B" stroke-width="8" />
+      <line x1="165" y1="122" x2="165" y2="166" stroke="#DC2626" stroke-width="5" stroke-linecap="round" />
+      <rect x="330" y="114" width="34" height="60" rx="12" fill="#F8FAFC" stroke="#09090B" stroke-width="8" />
+      <line x1="347" y1="122" x2="347" y2="166" stroke="#DC2626" stroke-width="5" stroke-linecap="round" />
+      <rect x="226" y="116" width="60" height="56" rx="8" fill="#3F3F46" stroke="#09090B" stroke-width="6" />
+      <polygon points="182,134 330,134 322,154 278,154 270,162 242,162 234,154 190,154" fill="#D4D4D8" stroke="#09090B" stroke-width="6" stroke-linejoin="round" />
+      <circle cx="256" cy="132" r="9" fill="#FACC15" stroke="#09090B" stroke-width="4" />
+      <circle cx="256" cy="146" r="8" fill="#71717A" stroke="#09090B" stroke-width="4" />
+    </g>
+
+    <!-- 3. BOTTOM TRUCK & WHEELS -->
+    <g id="bottom-truck-thps2">
+      <rect x="142" y="362" width="228" height="12" rx="6" fill="#94A3B8" stroke="#09090B" stroke-width="6" />
+      <rect x="148" y="338" width="34" height="60" rx="12" fill="#F8FAFC" stroke="#09090B" stroke-width="8" />
+      <line x1="165" y1="346" x2="165" y2="390" stroke="#DC2626" stroke-width="5" stroke-linecap="round" />
+      <rect x="330" y="338" width="34" height="60" rx="12" fill="#F8FAFC" stroke="#09090B" stroke-width="8" />
+      <line x1="347" y1="346" x2="347" y2="390" stroke="#DC2626" stroke-width="5" stroke-linecap="round" />
+      <rect x="226" y="340" width="60" height="56" rx="8" fill="#3F3F46" stroke="#09090B" stroke-width="6" />
+      <polygon points="182,378 330,378 322,358 278,358 270,350 242,350 234,358 190,358" fill="#D4D4D8" stroke="#09090B" stroke-width="6" stroke-linejoin="round" />
+      <circle cx="256" cy="380" r="9" fill="#FACC15" stroke="#09090B" stroke-width="4" />
+      <circle cx="256" cy="366" r="8" fill="#71717A" stroke="#09090B" stroke-width="4" />
+    </g>
+
+  </g>
+</svg>

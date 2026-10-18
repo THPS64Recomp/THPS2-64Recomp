@@ -1,0 +1,35 @@
+# Host-forced names for code class us (THPS2 USA). Read by decomp/common/gen_host_syms.py --force; the same
+# NAMES must exist in every class (versions/host_syms.toml `funcs`), at that class's own addresses.
+# (Was decomp/common/host_force/thps2.toml before the multi-version tables.)
+
+splits = [0x800B6360]   # run-time lookup miss (LOG H1): hidden start inside func_800B6308
+
+[force]
+"0x80000400" = "Boot_Entry"
+"0x80000870" = "Boot_Main"
+"0x80000AB4" = "Boot_PioCopy"
+"0x80000B1C" = "Erz_Unpack"
+"0x80000C50" = "Erz_UnpackMethod2"
+"0x80001340" = "Erz_UnpackMethod1"
+"0x80002F20" = "thps_osSetEventMesg"
+"0x80004890" = "thps_osPiRawStartDma"
+"0x80011A40" = "thps_osAiGetStatus"
+"0x800075B4" = "thps_osContGetQuery"
+"0x80045270" = "Cop2_GteLoad"         # 6x mtc2 + 3x mfc2 (PS1 GTE leftovers): instruction patches below
+"0x800CF294" = "Pi_DmaThread"
+"0x800B6AF8" = "GameEntry"
+# Widescreen / skip intro / test aid (names are ours, by what the code does):
+"0x800C0D3C" = "View_SetFrustum"      # glFrustum(view, l, r, b, t, n, f): l..f at view+0x160
+"0x800C1838" = "View_ComputeCullPlanes"
+"0x800BFFB4" = "MsgBox_SetText"       # (box, text, ...): stores a message box's text pointer
+"0x800570C4" = "Level_IsSelectable"   # (level, mode): the level select's "available?" test
+"0x80058010" = "Cheat_IsOn"   # (index): the cheat-on byte of cheat `index` (game state +0x15A6 + 4 * index); every cheat test of the game goes through it
+"0x800B6818" = "Tv_IsHomeRegion"      # returns gTvType != 0 (NTSC/MPAL console): the region check of func_80037350
+"0x800D1E34" = "Music_LoadSong"   # (player, song): MusHandleStop(old, 0), then the song is copied into the player's one buffer (src/music.cpp)
+
+[overlay_force]
+"t2_intro+0x114" = "Ovl_IntroUpdate"  # the intro screen's update (legal text + logos; LOG H4)
+
+# N64Recomp config pieces (tools/gen_versions.py). The VR4300 has no COP2; these paths must be dead in practice.
+[cop2]
+patch = { Cop2_GteLoad = [0x800454A8, 0x800454AC, 0x800454B0, 0x800454B4, 0x800454B8, 0x800454BC, 0x800454D4, 0x800454D8, 0x800454DC] }

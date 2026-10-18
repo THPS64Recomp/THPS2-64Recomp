@@ -1,0 +1,33 @@
+# Host-forced names for code class eu (THPS2 Europe). Same NAMES as every class (versions/host_syms.toml),
+# at Europe's addresses: sigmatch tier A pairs from USA (build/thps2_eu.sigmatch.json; LOG "V2"). The boot segment
+# is USA's, so its names sit at the same addresses; the main image moved +0x20..+0x30 here.
+
+splits = [0x800B6390]   # USA 0x800B6360 + 0x30: the same hidden start after the `jr ra` inside func_800B6338
+
+[force]
+"0x80000400" = "Boot_Entry"
+"0x80000870" = "Boot_Main"
+"0x80000AB4" = "Boot_PioCopy"
+"0x80000B1C" = "Erz_Unpack"
+"0x80000C50" = "Erz_UnpackMethod2"
+"0x80001340" = "Erz_UnpackMethod1"
+"0x80002F20" = "thps_osSetEventMesg"
+"0x80004890" = "thps_osPiRawStartDma"
+"0x80011A40" = "thps_osAiGetStatus"
+"0x800075B4" = "thps_osContGetQuery"
+"0x800452A0" = "Cop2_GteLoad"
+"0x800CF2B4" = "Pi_DmaThread"
+"0x800B6B28" = "GameEntry"
+"0x800C0D5C" = "View_SetFrustum"
+"0x800C1858" = "View_ComputeCullPlanes"
+"0x800BFFD4" = "MsgBox_SetText"
+"0x800570F4" = "Level_IsSelectable"
+"0x80058040" = "Cheat_IsOn"   # = USA 0x80058010 (sigmatch C; same 7 instructions, its own base)
+"0x800B6848" = "Tv_IsHomeRegion"      # returns gTvType == 0 (PAL console; USA's has the opposite sense): the region check
+"0x800D1EF4" = "Music_LoadSong"   # = USA 0x800D1E34 + 0xC0 (same code)
+
+[overlay_force]
+"t2_intro+0x114" = "Ovl_IntroUpdate"  # same offset as USA: the intro blob differs only from +0x850 (legal text)
+
+[cop2]
+patch = { Cop2_GteLoad = [0x800454D8, 0x800454DC, 0x800454E0, 0x800454E4, 0x800454E8, 0x800454EC, 0x80045504, 0x80045508, 0x8004550C] }

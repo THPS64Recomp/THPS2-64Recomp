@@ -1,0 +1,51 @@
+# N64Recomp config for THPS2 (N64, U) - same shape as the THPS1 config.
+# Inputs are generated locally from the user's ROM (make recomp-inputs):
+#   build/thps2.codeblob.bin  ROM[0:0x1000] | boot segment | ERZ-inflated main image
+#   recomp/thps2.syms.toml    sections + function boundaries (committed, addresses only)
+[input]
+entrypoint = 0x80000400
+symbols_file_path = "thps2.syms.toml"
+rom_file_path = "../build/thps2.codeblob.bin"
+output_func_path = "../build/recomp/funcs"
+
+[patches]
+# PS1 GTE (COP2) leftovers in func_80045270 (called from 3 places; the VR4300 has no COP2
+# and libultra treats a CpU exception for COP2 as fatal, so these paths are dead or have
+# an empty loop count on hardware). N64Recomp cannot translate COP2: patch each of the
+# 6 mtc2 and 3 mfc2 to nop, as THPS1 did for its 3 mfc2. No `ctc2` exists in THPS2.
+[[patches.instruction]]
+func = "func_80045270"
+vram = 0x800454A8   # mtc2 a1,$25
+value = 0x00000000
+[[patches.instruction]]
+func = "func_80045270"
+vram = 0x800454AC   # mtc2 a2,$26
+value = 0x00000000
+[[patches.instruction]]
+func = "func_80045270"
+vram = 0x800454B0   # mtc2 a3,$27
+value = 0x00000000
+[[patches.instruction]]
+func = "func_80045270"
+vram = 0x800454B4   # mtc2 a0,$9
+value = 0x00000000
+[[patches.instruction]]
+func = "func_80045270"
+vram = 0x800454B8   # mtc2 v1,$10
+value = 0x00000000
+[[patches.instruction]]
+func = "func_80045270"
+vram = 0x800454BC   # mtc2 v0,$11
+value = 0x00000000
+[[patches.instruction]]
+func = "func_80045270"
+vram = 0x800454D4   # mfc2 t0,$25
+value = 0x00000000
+[[patches.instruction]]
+func = "func_80045270"
+vram = 0x800454D8   # mfc2 t1,$26
+value = 0x00000000
+[[patches.instruction]]
+func = "func_80045270"
+vram = 0x800454DC   # mfc2 t2,$27
+value = 0x00000000
