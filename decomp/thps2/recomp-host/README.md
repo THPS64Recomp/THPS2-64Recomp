@@ -173,6 +173,10 @@ front end, a career level, audio, controls, widescreen, Controller Pak, the sett
 in-game settings menu (`menu` and `menu-reload` sessions, six scenarios; `menu-controls`, `menu-controls-reload` and `menu-ports` for
 rebinding and the Controllers list, ten scenarios; all skipped when `--features` says `menu=0`).
 
+`lf-check` (`tests/load_freeze.py`) times the first three course starts of the course cycle with `ftime`, with no screenshot inside
+the window: the median over the starts of the longest gap between game frames while the course loads stays under 140 ms (104-120 ms seen).
+`lf-probe` (opt-in, `--session lf-probe`) runs all four starts in a visible window and keeps the CSVs in `build/tests/lf/`.
+
 Full runs on the static build, 2026-10-12: Europe 32 pass, 0 fail, 4 skipped; USA 32 pass, 0 fail, 4 skipped, after re-running `level_grab`, a
 known flake (the in-level HUD checkpoint was missed under load; `pause_resume` failed about one run in three in earlier runs). The 4 skips are
 launcher-only scenarios. The split-built Europe library passed the full suite (26/0/4) before the menu scenarios were added, and
