@@ -741,3 +741,19 @@ SESSIONS += crop_sessions([*CAREER_TO_GOALS, ("go", "A", "goals", "in_level", 90
 # Border crop in a two-player split screen at 16:9: each view's own inset scissor goes to the frame's edges too (crop_sessions.crop_two_players).
 from crop_sessions import crop_two_players  # noqa: E402
 SESSIONS.append(crop_two_players(_TWO_PADS_TO_LEVEL, [("ctl", "vpad button start 1"), ("wait", 10), ("ctl", "vpad button start 0"), ("wait", 45)]))
+# Level-start freeze (v0.2 queue item 3, tests/load_freeze.py): the course cycle's four starts with frame timestamps over each load
+# phase (A on the level select, A on the goals). `lf-probe` (optin) runs in a visible window; THPS_LF_SAMPLE=8 adds a `sample`.
+from load_freeze import load_freeze_session  # noqa: E402
+_LF = dict(
+    to_select=[*BOOT_TO_MENU, *CAREER_TO_GOALS[:-1]],
+    courses=[[], [("press", "RIGHT"), ("wait", 30)], [("press", "RIGHT"), ("wait", 30), ("press", "RIGHT"), ("wait", 30)], [("press", "RIGHT"), ("wait", 30)]],
+    phases=[("A", []), ("A", [("wait_peek", "@gRunActive", 1, 60)])],
+    end_run=[("press", "START"), ("wait", 40), ("menu", "pause", 3), ("press", "A"), ("wait", 120), ("press", "A"), ("wait", 20),
+             ("press", "DOWN"), ("wait", 20), ("press", "DOWN"), ("wait", 20), ("press", "A"), ("wait", 150)],
+)
+SESSIONS += [load_freeze_session("lf-probe", **_LF, hidden=False, optin=True, limits={"composited": 1000.0, "game": 1000.0})]
+# The suite's check (hidden window, the first three courses): the median over the three starts of the longest gap between game
+# frames while the course loads stays under LF_GAME_MS (one preempted window on a busy machine does not fail it; a warning only
+# when the machine is overloaded). Before the v0.2 fixes (ERZ decoder, native memset / memcpy) every start was over it.
+LF_GAME_MS = 140.0   # 2026-10-18: 104-120 ms after the fixes, 134-174 ms before (load 4-6)
+SESSIONS += [load_freeze_session("lf-check", **{**_LF, "courses": _LF["courses"][:3]}, limits={"game": 1000.0}, median=("game", LF_GAME_MS))]
