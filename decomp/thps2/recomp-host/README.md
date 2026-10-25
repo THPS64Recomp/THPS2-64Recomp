@@ -170,7 +170,8 @@ tests/run.py --version thps2_eu # the suite on Europe (its references live in bu
 `tests/run.py` starts the host once per **session** and walks the game through **scenarios**, waiting for **checkpoints**
 instead of sleeping. Only one `thps2_recomp` runs at a time (`--no-pads --mute`; `uptime` is logged with every number). The scenarios cover the
 front end, a career level, audio, controls, widescreen, Controller Pak, the settings, the camera and aspect checks, high frame rate and the
-in-game settings menu (`menu` and `menu-reload` sessions, six scenarios, skipped when `--features` says `menu=0`).
+in-game settings menu (`menu` and `menu-reload` sessions, six scenarios; `menu-controls`, `menu-controls-reload` and `menu-ports` for
+rebinding and the Controllers list, ten scenarios; all skipped when `--features` says `menu=0`).
 
 Full runs on the static build, 2026-10-12: Europe 32 pass, 0 fail, 4 skipped; USA 32 pass, 0 fail, 4 skipped, after re-running `level_grab`, a
 known flake (the in-level HUD checkpoint was missed under load; `pause_resume` failed about one run in three in earlier runs). The 4 skips are
@@ -191,4 +192,4 @@ CI (`.github/workflows/ci.yml`) builds the stub host on Linux, Windows and macOS
 - No in-game pak swapping; the in-game pak manager is not exercised by the tests; Rumble Pak output is untested on a real pad.
 - Widescreen: the in-level HUD is anchored to the screen edges by default (`--hud expand`; `--hud original` keeps it centred 4:3); menus and loading screens are pillarboxed.
 - High frame rate is checked in The Hangar only.
-- Texture packs: not attempted. The settings menu has no rebinding of single keys or buttons yet (edit `controls.cfg`).
+- Texture packs: not attempted. The settings menu rebinds single keys and buttons in its Controls tab (saved to `controls.cfg`).
