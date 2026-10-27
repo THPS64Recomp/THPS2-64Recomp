@@ -8,6 +8,18 @@ gSControl              = 0x800EA9A4
 gSkater                = 0x800EA59C
 gTvType                = 0x800F5924   # GameEntry's init copies osTvType here (0x800B6A7C)
 gRunActive             = 0x800DC030   # same role as in us (+0xC0 like gSControl: translate_data.py, 1 vote; behaviour checked on the EU ROM, tests: pause_back)
+gFarPlane              = 0x800E4B40   # these seven = us + 0xC0 (translate_data.py, 3-10 votes each)
+gWorldFarCache         = 0x800DBE08   # us + 0xC0 (translate_data.py, 7 votes)
+gDlBufSize             = 0x80101EB4
+gDlBufs                = 0x80101ED0
+gDlHead                = 0x800F8E24   # us + 0xC0 (the frame start's store, checked in the generated code)
+gDlFrame               = 0x800F8A38   # us + 0xC0 (same)
+gMtxPools              = 0x80101ED8
+gMtxCap                = 0x80101EE4
+gVtxPools              = 0x80101EF0
+gVtxCap                = 0x80101F00
+gRenderer              = 0x800FB078   # us + 0xC0: the same `lw a0` in World_DrawItems (eu 0x80041D08 = 0x8EE4B078)
+gWorldItems            = 0x800DD7B4   # us + 0xC0 (translate_data.py, 26 votes)
 gTimeScale             = 0x800E886C   # gPhysicsFrameTime * 7680 each frame (the frame update; Slow-Nic: / 4 while the skater does a trick)
 gMusNumChannels        = 0x801020A0   # MUS library globals: channel count; USA + 0xC0 (MusHandleStop 0x800D403C)
 gMusChannels           = 0x801020A8   # MUS library globals: the channel records (304 bytes each)
