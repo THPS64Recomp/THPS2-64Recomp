@@ -24,6 +24,14 @@ splits = [0x800B6360]   # run-time lookup miss (LOG H1): hidden start inside fun
 "0x800BFFB4" = "MsgBox_SetText"       # (box, text, ...): stores a message box's text pointer
 "0x800570C4" = "Level_IsSelectable"   # (level, mode): the level select's "available?" test
 "0x80058010" = "Cheat_IsOn"   # (index): the cheat-on byte of cheat `index` (game state +0x15A6 + 4 * index); every cheat test of the game goes through it
+"0x80041964" = "World_DrawItems"   # the world item loop: skips items whose trigger-visibility bit (1, player 2: 0x40) is set; draw distance "full" (game/draw_distance.cpp)
+"0x800B3F5C" = "Mem_Alloc"   # (heap, size, align): first fit (draw distance: the matrix-pool request at start-up)
+"0x80033FAC" = "World_SetVisibilityInBox"   # (min, max, ..., set mask, clear mask): the trigger scripts' zone culling; draw distance tracks which items it hid
+"0x800B90BC" = "Gfx_SetupCourse"   # (): the course gfx set-up (callers 0x80037F78 .. 0x80038440): gDlBufSize = gDlUnits x 8 (0x800F8944, set to 0x2400 / 0x3000 by 0x800B8710), the two display lists (0x800B92B8), then the matrix and vertex pools; the front end has its own (0x800B9438)
+"0x800C50B0" = "Mesh_PassBegin"   # (renderer): batching on (+0x2AE0 = 1); World_DrawItems' caller 0x800336E0 wraps it in a begin / end pair
+"0x800C50D0" = "Mesh_PassEnd"   # (renderer): flushes the batch (0x800C5A64), Mesh_QueueEmit, then empties the lists and turns batching off
+"0x800C61E0" = "Mesh_QueueEmit"   # (renderer): draws the mesh queue (512 entries, the flush 0x800C5A64 drops the rest) and the depth-sorted list (96); called from the pass end 0x800C50D0
+"0x80042E74" = "World_FindItem"   # (list, name checksum) -> item: how the scripts' per-item commands (show / hide / kill by name) and the gameplay code find an item
 "0x800B6818" = "Tv_IsHomeRegion"      # returns gTvType != 0 (NTSC/MPAL console): the region check of func_80037350
 "0x800D1E34" = "Music_LoadSong"   # (player, song): MusHandleStop(old, 0), then the song is copied into the player's one buffer (src/music.cpp)
 

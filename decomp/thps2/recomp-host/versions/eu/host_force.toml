@@ -23,6 +23,14 @@ splits = [0x800B6390]   # USA 0x800B6360 + 0x30: the same hidden start after the
 "0x800BFFD4" = "MsgBox_SetText"
 "0x800570F4" = "Level_IsSelectable"
 "0x80058040" = "Cheat_IsOn"   # = USA 0x80058010 (sigmatch C; same 7 instructions, its own base)
+"0x80041994" = "World_DrawItems"   # = USA (sigmatch A)
+"0x800B3F8C" = "Mem_Alloc"   # (heap, size, align): first fit (draw distance: the matrix-pool request at start-up)
+"0x80033FDC" = "World_SetVisibilityInBox"   # (min, max, ..., set mask, clear mask): the trigger scripts' zone culling; draw distance tracks which items it hid
+"0x800B90E0" = "Gfx_SetupCourse"   # = USA 0x800B90BC + 0x24 (the same size, 0x37C)
+"0x800C50D0" = "Mesh_PassBegin"   # = USA + 0x20 (the same body)
+"0x800C50F0" = "Mesh_PassEnd"   # = USA + 0x20 (the same body)
+"0x800C6200" = "Mesh_QueueEmit"   # = USA + 0x20 (the same body; the renderer offsets +0x21CC / +0x2AD8 are the same)
+"0x80042EA4" = "World_FindItem"   # (list, name checksum) -> item: how the scripts' per-item commands (show / hide / kill by name) and the gameplay code find an item
 "0x800B6848" = "Tv_IsHomeRegion"      # returns gTvType == 0 (PAL console; USA's has the opposite sense): the region check
 "0x800D1EF4" = "Music_LoadSong"   # = USA 0x800D1E34 + 0xC0 (same code)
 
