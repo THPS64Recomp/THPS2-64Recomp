@@ -164,7 +164,8 @@ tools/test.sh --record          # first time on a machine: capture reference fra
 tools/test.sh                   # controls.cfg test + the whole suite
 tools/test.sh --only pak_save   # one scenario (+ the ones before it in its session)
 tools/test.sh --check-refs      # how distinct the recorded references are
-tests/run.py --version thps2_eu # the suite on Europe (its references live in build/tests/refs-thps2_eu/; the rest fall through to USA's)
+tools/test.sh --version thps2_eu --record   # Europe: records the screens that differ (OWN_REFS) into build/tests/refs-thps2_eu/
+tools/test.sh --version thps2_eu            # the suite on Europe (the other screens use USA's references)
 ```
 
 `tests/run.py` starts the host once per **session** and walks the game through **scenarios**, waiting for **checkpoints**
