@@ -27,6 +27,12 @@ GAME = dict(
     rev0_header=(b"THPS2", b"NTQP"),
 )
 
+# Checkpoints whose screen differs on another release, by version id: that release needs its own reference for them, recorded with
+# `tools/test.sh --version ID --record` (every other checkpoint uses the first release's picture; games.toml `refs_from`).
+OWN_REFS = {
+    "thps2_eu": ["main_menu", "wheel_create", "cas_roster"],
+}
+
 # name: size, regions [(region (x0, y0, x1, y1), gw, gh, tol)], record
 # A region (region, "mask", luma_min, min_frac) is a template match instead: at least min_frac
 # of the reference's pixels brighter than luma_min must have the same colour (for HUD text over

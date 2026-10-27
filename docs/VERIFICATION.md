@@ -52,8 +52,9 @@ cheats, and the `hole` and `vp_split` checks of 60 Hz interpolation (both fail w
 | High frame rate | input latency; motion smoothness at 60 Hz |
 | Course cycle | four courses back to back (pause, END RUN, back to the select screen): each course's song loads only after the old song's channels have stopped reading the shared song buffer (`src/music.cpp`; without it this game crashed after a few courses); the last course has music |
 
-Reference pictures are ROM-derived, so each machine records its own (`test.sh --record`); they are never committed. The suite
-records `uptime` with its timings. Only one host runs at a time.
+Reference pictures are ROM-derived, so each machine records its own (`test.sh --record`); they are never committed. Europe
+uses USA's except for the few screens that differ (`OWN_REFS` in `tests/scenarios.py`), which
+`test.sh --version thps2_eu --record` records. The suite records `uptime` with its timings. Only one host runs at a time.
 
 **Windows** (2026-10-14, Windows 11 x64, Intel Core i7-8809G, AMD Radeon RX Vega M, D3D12, 3840x2160 at 60 Hz, 150 %, on the head
 before the last fixes): the static build passes **41 passed, 0 failed, 4 skipped** for USA; Europe 39 passed with one failure in
