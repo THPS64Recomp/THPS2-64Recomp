@@ -16,6 +16,7 @@ funcs = [
     "Gfx_SetupCourse",        # (): the course gfx set-up (each course start, RETRY): display lists, matrix and vertex pools (draw distance: bigger display lists)
     "Mesh_QueueEmit",         # (renderer): draws the renderer's mesh queue and sorted list of one pass (draw distance: game/draw_distance.cpp)
     "Music_LoadSong",         # (player, song): the music player copies the next song over the playing one (src/music.cpp)
+    "Trig_SkipCommand",       # (command) -> the next command of a trigger command list, 0 at its end (draw distance: the zone classification)
 ]
 
 # Functions inside the front-end overlays, named by decomp/common/overlay_recomp.py from each class's
@@ -47,6 +48,8 @@ addr = [
     "gRenderer",              # draw distance: pointer to the renderer (mesh queue: 512 entries at +0x1CC, count +0x21CC; sorted list: 96 at +0x21D8, count +0x2AD8)
     "gMusNumChannels",        # MUS library: number of channels (word)
     "gMusChannels",           # MUS library: pointer to the channel records (304 bytes each; src/music.cpp)
+    "gTrgNodes",              # draw distance: pointer to the course trigger file's node table (pointers to the nodes; Trig_LoadTRG)
+    "gTrgNodeCount",          # draw distance: the number of trigger nodes (word)
 ]
 
 # Struct field offsets (versions/<class>/data_syms.toml [field]): layout can differ between builds.

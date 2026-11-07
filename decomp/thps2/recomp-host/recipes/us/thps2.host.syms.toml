@@ -2315,7 +2315,7 @@ functions = [
     { name = "func_800A17F4", vram = 0x800A17F4, size = 0x1AC },
     { name = "func_800A19A0", vram = 0x800A19A0, size = 0x37C },
     { name = "SendSuspendOrActivate_maybe", vram = 0x800A1D1C, size = 0x154 },
-    { name = "func_800A1E70", vram = 0x800A1E70, size = 0x340 },
+    { name = "Trig_SkipCommand", vram = 0x800A1E70, size = 0x340 },
     { name = "func_800A21B0", vram = 0x800A21B0, size = 0x1388 },
     { name = "func_800A3538", vram = 0x800A3538, size = 0x1C0 },
     { name = "func_800A36F8", vram = 0x800A36F8, size = 0x108 },

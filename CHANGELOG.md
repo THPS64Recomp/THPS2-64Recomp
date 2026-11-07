@@ -7,6 +7,20 @@ All notable changes to THPS2 64: Recompiled are listed here. The format is based
 
 ## [Unreleased]
 
+### Changed
+- Built on THPS64Host v0.3.0.
+- Draw distance at Full draws the areas the courses hide by zone again, and only those: each course's trigger file is read at
+  its start to tell the zones the game hides for distance from the ones that hold course state (The Hangar's crashed ceiling
+  and its floor's light overlays), which stay as the game sets them. Rooms (a zone the course hides from its own doors, one
+  each in School II and Skatestreet) are left to the game.
+
+### Fixed
+- School II at Full draw distance: patches of the sunlit ground no longer flash flat. The renderer was splitting those frames
+  into many separate passes; School II, NY City, Bullring and Philadelphia draw them in one pass again, which also takes about
+  1 ms less per frame.
+- Philadelphia: trees at the edge of the view no longer smear and buildings no longer open holes as you turn, with frame
+  interpolation on.
+
 ## [0.2.0-preview] - 2026-10-27
 
 The second early preview, built on THPS64Host v0.2.0: split screen, Picture Border, rebinding, draw distance and the
