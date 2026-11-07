@@ -7,8 +7,15 @@ All notable changes to THPS2 64: Recompiled are listed here. The format is based
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-07
+
+The first full release, after two early previews. Built on THPS64Host v0.3.0. It runs the USA and Europe releases of the N64
+game, on macOS (universal) and Windows x64.
+
 ### Changed
 - Built on THPS64Host v0.3.0.
+- No longer an early preview. A few parts of the game still haven't been played through by hand on this build (the park editor,
+  split screen in a level, replays and most competitions); [Known issues](docs/KNOWN-ISSUES.md#untested) lists them.
 - Draw distance at Full draws the areas the courses hide by zone again, and only those: each course's trigger file is read at
   its start to tell the zones the game hides for distance from the ones that hold course state (The Hangar's crashed ceiling
   and its floor's light overlays), which stay as the game sets them. Rooms (a zone the course hides from its own doors, one
@@ -120,6 +127,7 @@ less hand play than THPS1; see the README.
 - B didn't go back in menus that draw a 3D scene (Create-a-Skater, the pause menu, the screens over a level).
 - Windows: the settings migration was never saved, and the frame-interpolation time budget never applied.
 
-[Unreleased]: https://github.com/THPS64Recomp/THPS2-64Recomp/compare/v0.2.0-preview...HEAD
+[Unreleased]: https://github.com/THPS64Recomp/THPS2-64Recomp/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/THPS64Recomp/THPS2-64Recomp/releases/tag/v0.3.0
 [0.2.0-preview]: https://github.com/THPS64Recomp/THPS2-64Recomp/releases/tag/v0.2.0-preview
 [0.1.0-preview]: https://github.com/THPS64Recomp/THPS2-64Recomp/releases/tag/v0.1.0-preview

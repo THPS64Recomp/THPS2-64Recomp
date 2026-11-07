@@ -1,15 +1,8 @@
 # Known issues
 
-What isn't finished or hasn't been checked in v0.2.0-preview. "Untested" means the code exists but hasn't been run in that
+What isn't finished or hasn't been checked in v0.3.0. "Untested" means the code exists but hasn't been run in that
 setting. Problems fixed before this release are in the [CHANGELOG](../CHANGELOG.md). Found something that isn't here?
 [TESTING](TESTING.md) says how to report it.
-
-## Early preview
-
-THPS2 64: Recompiled is an **early preview**. It shares its host with THPS1 64: Recompiled v0.1 and passes its own automated
-suite, but it has had much less hand play than THPS1, so this list is likely incomplete. These parts of the game haven't
-been played through by a person on this build: the park editor, split screen in a level, replays and most competitions.
-[TESTING](TESTING.md) lists what we'd like you to try.
 
 ## Platforms
 
@@ -47,8 +40,10 @@ been played through by a person on this build: the park editor, split screen in 
 - **Frame interpolation** at 60 Hz and up pairs 97 % or more of the moving parts between game frames in
   the Hangar (the first career level) and the menus. Other levels have cars and other moving objects
   whose pairing hasn't been checked. Replays and cutscenes are untested.
-- **Each level start freezes the picture briefly** while the game loads the level (about 0.16 s, 0.2 s in the first
-  preview), and the **attract demo** has short stalls every ten seconds or so.
+- **Sliding text moves in steps at 60 fps**: text that slides across the screen, such as a course title or a menu sliding
+  in, moves only on the game's own frames (30 per second), so it looks less smooth than the 3D picture.
+- **Each level start freezes the picture briefly** while the game loads the level (about 0.16 s), and the
+  **attract demo** has short stalls every ten seconds or so.
 - RT64 **compiles shaders the first time an effect appears**, which causes short hitches.
 - With the window hidden or covered, the app stops presenting frames; the game keeps running.
 - Apple GPUs have no 8x MSAA; asking for it turns MSAA off.
@@ -58,12 +53,14 @@ been played through by a person on this build: the park editor, split screen in 
   applies at once. No restart is needed.
   Parts of a course the game hides by area appear only as you get near them, as in the original game, and a few far
   pieces the game never drew from that distance can look odd (the Hangar: a dark patch on the far wall).
+- **School II's sky** shows two colours, split across the sky, and the split can shift as you skate. It looks the same
+  at draw distance Original, so it comes from the game's own sky.
 
 ## Stability
 
-- **A crash in the graphics layer** (inside RT64, seen in all three games under load) is fixed in this release.
-  No long soak yet; every suite run plays four courses back to back
-  (`course-cycle`), the path of the crash fixed in this release.
+- **A crash in the graphics layer** (inside RT64, seen in all three games under load) was fixed in v0.2.
+  No long soak yet; every suite run plays four courses back to back (`course-cycle`), the path of that crash.
+
 ## Input and saves
 
 - **Player 2:** by default the first controller to press a button is player 1 and the next is player 2. The Controls
