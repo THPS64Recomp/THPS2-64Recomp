@@ -13,6 +13,8 @@ All notable changes to THPS2 64: Recompiled are listed here. The format is based
   its start to tell the zones the game hides for distance from the ones that hold course state (The Hangar's crashed ceiling
   and its floor's light overlays), which stay as the game sets them. Rooms (a zone the course hides from its own doors, one
   each in School II and Skatestreet) are left to the game.
+- Tests: test rides claim a controller before steering, and an opt-in session records and replays a complete ride. Recorded
+  rides use a consistent replay step for the game's coupled timing values.
 
 ### Fixed
 - School II at Full draw distance: patches of the sunlit ground no longer flash flat. The renderer was splitting those frames
@@ -20,6 +22,7 @@ All notable changes to THPS2 64: Recompiled are listed here. The format is based
   1 ms less per frame.
 - Philadelphia: trees at the edge of the view no longer smear and buildings no longer open holes as you turn, with frame
   interpolation on.
+- Skating tests read the actual physics dispatch state, so airborne and rail observations describe the skater correctly.
 
 ## [0.2.0-preview] - 2026-10-27
 

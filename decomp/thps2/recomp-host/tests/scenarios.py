@@ -641,7 +641,7 @@ SESSIONS = [
             *([("press", "RIGHT"), ("wait", 45)] if lv == "school" else []),
             ("press", "A"), ("wait", 120), ("shot", "goals_" + lv),
             ("go", "A", "goals" if lv == "hangar" else "level_select", "in_level", 90),
-            ("wait", 30), ("vpad", "attach"),
+            ("wait", 30), ("vpad", "attach"), ("vpress", "a"),
             ("ctl", "projids"), ("ctl", "hfr"), ("ctl", "vpsplit"),
             ("ctl", "pcap 1 build/feel/" + lv), ("ctl", "vpad axis lefty -32000"),
             *(_FEEL_TRICKS if __import__("os").environ.get("FEEL_TRICKS") else [
@@ -683,7 +683,7 @@ SESSIONS += [
     dict(name="cheats-explore", config="cheats-explore-config", fresh_files=["cheats.cfg"], fresh_pak=True, wav=False, optin=True, args=["--skip-intro"] + _os.environ.get("CS_ARGS", "").split(), scenarios=[
         ("cheats_explore", "exploration: first level, forward + ollie + flip + grind presses; skater state / rail balance / time scale samples", [
             *BOOT_TO_MENU, *CAREER_TO_GOALS, ("go", "A", "goals", "in_level", 90), ("wait", 30),
-            ("vpad", "attach"),
+            ("vpad", "attach"), ("vpress", "a"),
             ("skater_watch", 80, _CS_TRY, ["Skater_PhysState", "Skater_RailBalance", "@gTimeScale"]),
             ("ctl", "vpad axis lefty 0"),
             ("go", "START", "in_level", "pause"), ("wait", 20), ("shot", "pause"),
@@ -705,7 +705,7 @@ SESSIONS += MENU_SESSIONS
 
 # Draw distance (2026-10-17): career (unlocked levels), one level with the setting under test.
 # Same steps as THPS1's dd-probe: a paused spot compared per factor (DD_AB), then a ride with frame times. Exploration only (optin).
-# DD_RIGHTS: RIGHT presses at the level select; DD_TAG / DD_OUT: output; DD_ARGS: extra host args; DD_RIDE "lefty:frames ..." (x=... for leftx).
+# DD_RIGHTS: RIGHT presses at the level select; DD_TAG / DD_OUT: output; DD_ARGS: extra host args; DD_RIDE "lefty:frames ..." (raw SDL axes, -32768..32767) (x=... for leftx).
 _DD_DIR = _os.path.join(_os.environ.get("DD_OUT", "/tmp/dd"), _os.environ.get("DD_TAG", "run"))
 _DD_SHOT = lambda name: [("ctl", f"pcap 1 {_DD_DIR}/{name}"), ("wait", 3), ("ctl", "pcap 0"), ("wait", 10)]
 # DD_AB "K[:S] ...": factor K, with `dd showall S` first when given (1:0 = the game's own picture inside `full`); DD_TRACE=1: `dltrace 1` after
@@ -736,7 +736,7 @@ SESSIONS += [
             # DD_PRE "KEY:frames ...": presses before the ride, with a shot after each (e.g. with --skip-to-restart in DD_ARGS: the pause menu's
             # SKIP TO RESTART to one of the course's restart points: repeatable spots all over the course)
             *[s for st in _os.environ.get("DD_PRE", "").split() for s in (("press", st.split(":")[0]), ("wait", int(st.split(":")[1])), ("shot", "pre"))],
-            ("vpad", "attach"),
+            ("vpad", "attach"), ("vpress", "a"), ("wait", 20),  # claim port 1 before any stick input
             *[s for st in _os.environ.get("DD_RIDE", "").split() for s in (
                 (("ctl", f"vpad axis leftx {st.split(':')[0][2:]}"),) if st.startswith("x=") else (("ctl", f"vpad axis lefty {st.split(':')[0]}"),)) +
                 (("wait", int(st.split(':')[1])),)],
@@ -805,7 +805,8 @@ SESSIONS += [
 # Heap headroom with the always-allocated 2048-matrix pools (2026-10-22, the private development notes; optin, measurement): one career
 # course (DH_COURSE: list position), loaded, skated ~12 s and ended from the pause menu (END RUN), `dd heap` (low-water marks since the
 # start) after the load, after the ride and after the end. DD_ARGS: extra host args (e.g. "--draw-distance full", "--dd-buffers original").
-_DH_PLAY = [("ctl", "vpad axis lefty -32767"),
+_DH_PLAY = [("vpress", "a"),   # claim port 1 before the stick-only route
+             ("ctl", "vpad axis lefty -32767"),
             *[x for k in range(12) for x in (("ctl", f"vpad axis leftx {(-32767, 0, 32767, 0)[k % 4]}"),
                                              ("ctl", "vpad button a 1"), ("wait", 8), ("ctl", "vpad button a 0"), ("wait", 22))],
             ("ctl", "vpad axis lefty 0"), ("ctl", "vpad axis leftx 0")]
@@ -831,7 +832,7 @@ SESSIONS += [
 # input, then pause -> END RUN and on through the end-of-run screens (DD_LONG_NAV: presses after END RUN) to the next course. Exploration
 # only (optin): shots at every step, `dd` stats after each course (buffer peaks, governor), `stats` at the end.
 _DDL_COURSES = [int(x) for x in _os.environ.get("DD_LONG_COURSES", "0 1 2").split()]   # increasing list positions
-_DDL_PLAY = lambda s: [("ctl", "vpad axis lefty -32767"), *[x for k in range(max(1, s // 2)) for x in (
+_DDL_PLAY = lambda s: [("vpress", "a"), ("ctl", "vpad axis lefty -32767"), *[x for k in range(max(1, s // 2)) for x in (
     ("ctl", f"vpad axis leftx {(-32767, 0, 32767, 0)[k % 4]}"), ("ctl", "vpad button a 1"), ("wait", 8), ("ctl", "vpad button a 0"), ("wait", 52))],
     ("ctl", "vpad axis lefty 0"), ("ctl", "vpad axis leftx 0")]
 _DDL_NAV = [s for p in _os.environ.get("DD_LONG_NAV", "A:120 DOWN:20 DOWN:20 A:150").split() for s in (("press", p.split(":")[0]), ("wait", int(p.split(":")[1])), ("shot", "nav"))]
@@ -965,7 +966,7 @@ SESSIONS += [
             ("ctl_match", "dd", r"mode=original .* mtx_cap=420 "),
             ("ui", "esc"), ("ui_state", "open=1"), ("ui", "tab 2"), ("ui", "click #lbl_dd_full"), ("log", r"draw distance: full"), ("ui", "esc"),
             ("ctl", "dd reset"),
-            ("vpad", "attach"),
+            ("vpad", "attach"), ("vpress", "a"),
             ("ctl", "vpad axis lefty -32767"), ("wait", 150),
             *[s for k in range(6) for s in (("ctl", f"vpad axis leftx {32767 if k % 2 else -32767}"), ("wait", 20), ("ctl", "vpad axis leftx 0"), ("wait", 20))],
             ("ctl", "vpad axis lefty 0"), ("wait", 30),
@@ -986,7 +987,8 @@ SESSIONS += [
 # guards are on (`dd dlprobe` canary 1; until 2026-10-26 it only asked for the variable in this comment, and `canary_bad 0` passed with no
 # guard at all). Expected: no guard word changed, no budget cut at the default budget, no panic, no failed heap request. The forced cuts
 # are dd-cut's.
-_DS_RIDE = [("ctl", "vpad axis lefty -32767"),
+_DS_RIDE = [("vpress", "a"),   # claim port 1 before the stick-only route
+             ("ctl", "vpad axis lefty -32767"),
             *[x for k in range(6) for x in (("ctl", f"vpad axis leftx {(-32767, 32767)[k % 2]}"), ("wait", 15), ("ctl", "vpad axis leftx 0"), ("wait", 10))],
             ("ctl", "dd mode original"), ("wait", 4), ("ctl", "dd mode full"), ("wait", 4), ("ctl", "dd mode 2x"), ("wait", 4), ("ctl", "dd mode full"),
             *[x for k in range(4) for x in (("ctl", f"vpad axis leftx {(32767, -32767)[k % 2]}"), ("wait", 20))],
@@ -1018,7 +1020,8 @@ SESSIONS += [
 # Frame pacing in a visible window (2026-10-23, the user's "stuttery" report; optin): the title left alone until the attract demo runs
 # (frame times over PACE_DEMO frames), or with PACE_MODE=ride the first course (frame times over a 12 s ride). PACE_ARGS: host args (e.g.
 # "--refresh 60"; another rate, test-only: THPS_TEST_REFRESH=display|N in the environment). Run it with THPS2_BINARY of the build to compare.
-_PACE_RIDE = [("ctl", "vpad axis lefty -32767"),
+_PACE_RIDE = [("vpress", "a"),   # claim port 1 before the stick-only route
+             ("ctl", "vpad axis lefty -32767"),
               *[x for k in range(12) for x in (("ctl", f"vpad axis leftx {(-32767, 0, 32767, 0)[k % 4]}"), ("wait", 30))],
               ("ctl", "vpad axis lefty 0"), ("ctl", "vpad axis leftx 0")]
 SESSIONS += [
@@ -1037,7 +1040,7 @@ SESSIONS += [
 
 # Fog (src/fog.cpp, graphics setting `fog`; optin, evidence): one course's run start, paused (FS_PAUSE=0: not paused), captured with the
 # game's fog, Soft and Off, then the game's fog again (a second capture of the same state shows what moves on its own). FS_RIGHTS picks
-# the course, FS_ARGS adds flags (e.g. `--draw-distance full`), FS_RIDE "lefty:frames ..." (x=leftx:frames turns) rides to another spot
+# the course, FS_ARGS adds flags (e.g. `--draw-distance full`), FS_RIDE "lefty:frames ..." (raw SDL axes, -32768..32767) (x=leftx:frames turns) rides to another spot
 # first, FS_STEPS "ctl command;shot NAME;..." adds steps (`fog soft 0.5;shot s50`: Soft starting at half the far plane). Captures:
 # <out>/fs_<name>/ (composited frames at --present-size), the `fog` counters in the notes.
 _FS_SHOT = lambda name: [("pcap", 3, f"fs_{name}")]
@@ -1053,7 +1056,7 @@ _FS_AB = [
 _FS_ARGS = ["--skip-intro", "--hidden", "--unlock-levels", "--present-size", "960x540", "--aspect", "16:9", "--window", "1280x720",
             "--refresh", "60"] + _os.environ.get("FS_ARGS", "").split()
 _FS_PAUSE = [
-    *([("vpad", "attach"),
+    *([("vpad", "attach"), ("vpress", "a"), ("wait", 20),  # claim port 1 before any stick input
        *[s for st in _os.environ["FS_RIDE"].split() for s in (
            ("ctl", f"vpad axis leftx {st[2:].split(':')[0]}") if st.startswith("x=") else ("ctl", f"vpad axis lefty {st.split(':')[0]}"),
            ("wait", int(st.split(":")[1])))],
@@ -1101,6 +1104,22 @@ SESSIONS += [
 from menu_session import fresh_defaults_session  # noqa: E402
 SESSIONS.append(fresh_defaults_session(_fs_to_run(1)))
 
+# Culling boxes and state boxes (v0.3, game/draw_distance.cpp: the trigger table). One course's run start at Full (DZ_RIGHTS: RIGHT
+# presses at the level select, 0 = The Hangar): the host prints the course's table once ("zones: ... culling boxes N (items M), state
+# boxes ..."), to compare with the research table; exploration only (optin). DZ_STEPS "ctl command;..." adds steps after it.
+SESSIONS += [
+    dict(name="dd-zones", config="dd-zones-config", fresh_pak=True, wav=False, optin=True,
+         args=["--skip-intro", "--hidden", "--unlock-levels", "--draw-distance", "full", "--window", "960x540"] + _os.environ.get("DZ_ARGS", "").split(),
+         scenarios=[
+        ("dd_zones", "the course's trigger table: culling and state boxes (the host log)", [
+            *_fs_to_run(int(_os.environ.get("DZ_RIGHTS", "0")), 60),
+            ("log", r"draw distance: zones: trigger file of [1-9]"),
+            ("ctl", "dd"),
+            *[s for c in _os.environ.get("DZ_STEPS", "").split(";") if c.strip() for s in (("ctl", c.strip()), ("wait", 20))],
+        ]),
+    ]),
+]
+
 # A RETRY and the zone record (review 2026-10-26, finding 7): School II at Full. RETRY runs the course set-up again and rebuilds the item
 # list at the same address and count, so the record (which items the zone culling hid, which an event owns) must start again: an item made
 # event-owned in the first run (`dd own`, as an event naming it would) is not after the RETRY, and the items the set-up named are the same
@@ -1136,7 +1155,8 @@ SESSIONS += [
 # its bound, so the cuts leave out the farthest and none is made after the passes began (late_cuts=0: before the fix the passes after the
 # first were counted at their average and an expensive far pass left the nearest ones out). The guard bytes are on (THPS_DD_CANARY) and
 # intact. dd-stress checks the default budget (no cut at all).
-_DC_RIDE = [("ctl", "vpad axis lefty -32767"),
+_DC_RIDE = [("vpress", "a"),   # claim port 1 before the stick-only route
+             ("ctl", "vpad axis lefty -32767"),
             *[x for k in range(8) for x in (("ctl", f"vpad axis leftx {(-32767, 32767)[k % 2]}"), ("wait", 15), ("ctl", "vpad axis leftx 0"), ("wait", 10))],
             ("ctl", "vpad axis lefty 0"), ("wait", 20)]
 SESSIONS += [
@@ -1178,3 +1198,7 @@ SESSIONS += [
         ]),
     ]),
 ]
+
+# Input-only canonical rides (local recordings; shared harness steps consume playback through EOF).
+from ride_sessions import ride_sessions  # noqa: E402
+SESSIONS += ride_sessions(_fs_to_run(0, 2), _CS_TRY, start_after="level_select", required_states={1: 10})
